@@ -1,0 +1,50 @@
+{% set name = "cusz" %}
+{% set version = "0.14.0" %}
+{% set commit = "e57fd7cd9df923164af9dd307b0b3d37dd9df137" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/szcompressor/cusz
+  git_rev: {{ commit }}
+  patches:
+    - thrust-includes.patch  # [cuda_compiler_version == "12.8"]
+
+build:
+  number: 0
+  skip: true  # [win or osx]
+  skip: true  # [cuda_compiler_version == "None"]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}     # [cuda_compiler_version != "None"]
+    - cmake
+    - make
+    - git
+  host:
+    - cuda-version {{ cuda_compiler_version }}      # [cuda_compiler_version != "None"]
+    - cuda-cudart-dev      # [cuda_compiler_version != "None"]
+    - cuda-nvml-dev      # [cuda_compiler_version != "None"]
+  run:
+    - cuda-version {{ cuda_compiler_version }}      # [cuda_compiler_version != "None"]
+
+about:
+  home: https://szcompressor.org/
+  dev_url: https://github.com/szcompressor/cusz
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: A GPU accelerated error-bounded lossy compression for scientific data
+  description: |
+    cuSZ is a CUDA-based implementation of the widely used SZ lossy compressor.
+    It provides GPU-accelerated error-bounded lossy compression for scientific data,
+    enabling efficient compression and decompression of large-scale scientific datasets.
+  doc_url: https://github.com/szcompressor/cusz
+
+extra:
+  recipe-maintainers:
+    - valmar

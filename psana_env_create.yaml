@@ -1,0 +1,87 @@
+channels:
+  #tidair-tag # pcas for rogue
+  - lcls-ii
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - setuptools 
+  - cmake
+  - make
+  - compilers
+  - numpy
+  - mpi4py   # psana packages (legion is optional)
+  - amityping
+  - cython
+  - matplotlib
+  - pytest
+  - curl
+  - mypy_extensions
+  - psmon
+  - h5py  # needed by small-h5 writer
+  - krtc
+  - htop
+  - pyzmq
+  - zeromq
+  - pyqt
+  - pyqtgraph=0.12.4
+  - readline
+  - dill
+  - flake8
+  - opencv   # xtcav
+  - scikit-learn # xtcav and tmo pop alg
+  - rapidjson
+  - jedi
+  - transitions
+  - ipython
+  - requests
+  - prometheus-cpp
+  - prometheus_client
+  - posix_ipc
+  - pyabel  # for tmo pop algorithm
+  - git-lfs
+  - git
+  - scikit-image
+  - scikit-beam
+  - pytables
+  - openmpi
+  - gdb
+  - holoviews
+  - panel
+    #- libpressio
+  - xarray
+  - ipympl
+  - ipywidgets
+  - pyepics
+  - rich
+  - jupyterlab
+  - dask
+  - dask-jobqueue
+  - distributed
+  - notebook
+  - eigen
+  - kafka-python
+  - lark-parser
+  - nlohmann_json 
+  - bson
+  - networkfox
+  - dill
+  - pint
+  - qtpy
+  - amityping
+  - mypy
+  - numba
+  - pytest-qt
+  - pytest-asyncio 
+  - sympy
+  - pygraphviz
+  - setproctitle
+  - pyfftw
+  - p4p
+  - qtconsole
+  - cogsci::pyqode.python
+  - qasync
+  - seaborn
+  - statsmodels
+  - pydantic
+  - pyfai

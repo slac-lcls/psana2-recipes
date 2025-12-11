@@ -1,0 +1,54 @@
+{% set name = "networkfox" %}
+{% set version = "0.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  - url: https://github.com/slac-lcls/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 10a7e8acbc3662116755dbe08c6dce180443a7c72bb4e88bd65b06dbb6a8de69
+  - path: LICENSE.md
+
+build:
+  skip: True  # [win or osx]
+  noarch: python 
+  number: 30
+  script:
+    - "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - python
+    - setuptools
+    - pip
+  run:
+    - python
+    - networkx
+    - pydot
+    - graphviz
+
+about:
+  home: https://github.com/slac-lcls/networkfox/
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.md
+  summary: 'Lightweight computation graphs for Python'
+  description: |
+    NetworkFoX is a fork of graphkit, which adds the
+    ability to do computations on top of NetworkX
+    graphs. It stands for Network F of X. The
+    features NetworkFoX adds to graphkit are: Control
+    flow nodes, such as If, ElseIf, and Else. Type
+    annotations and type checking for function inputs
+    and outputs. Coloring nodes in a graph and
+    evaluating only nodes of a given color. Picklable
+    graphs. Fixing various bugs in graphkit.
+  doc_url: https://github.com/slac-lcls/networkfox/
+  dev_url: https://github.com/slac-lcls/networkfox/
+
+extra:
+  recipe-maintainers:
+    - valmar
+    - chrisvam
+

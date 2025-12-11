@@ -1,0 +1,80 @@
+{% set name = "libpressio" %}
+{% set version = "1.0.6" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/robertu94/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 689d7295dad7b12b64a7b2d6467fa0b3fe73203a64016d2c651cff19bb65b5ee
+
+build:
+  skip: True  # [win or osx]
+  number: 1
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}     # [cuda_compiler_version != "None"]
+    - cmake
+    - make
+    - pkg-config
+    - python
+  host:
+    - cuda-version {{ cuda_compiler_version }}      # [cuda_compiler_version != "None"]
+    - cuda-nvml-dev
+    - libcufile-dev
+    - cuda-nvml-dev
+    - python
+    - sz3
+    - pybind11
+    - swig 4.0.2
+    - fpzip
+    - lua
+    - numpy >=2
+    - hdf5
+    - libstdcompat
+    - openmpi >=5
+    - mpi4py >=4
+    - sol2 <=3.3.0
+    - nlohmann_json
+    - cusz
+  run:
+    - cuda-version {{ cuda_compiler_version }}      # [cuda_compiler_version != "None"]
+    - python
+    - sz3
+    - fpzip
+    - lua
+    - numpy >=2
+    - hdf5
+    - libstdcompat
+    - numcodecs
+    - openmpi >=5
+    - mpi4py >=4
+    - sol2 <=3.3.0
+    - nlohmann_json
+    - cusz
+about:
+  home: https://robertu94.github.io/libpressio
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: COPYRIGHT.txt
+  summary: 'Library to abstract between compressors and their configurations'
+  description: |
+    pressio is latin for compression. LibPressio is a C++ library with
+    C compatible bindings to abstract between different lossless and
+    lossy compressors and their configurations. It solves the problem
+    of having to having to write separate application level code for
+    each lossy compressor that is developed. Instead, users write
+    application level code using LibPressio, and the library will make
+    the correct underlying calls to the compressors. It provides
+    interfaces to represent data, compressors settings, and compressors.
+  doc_url: https://robertu94.github.io/libpressio
+  dev_url: https://github.com/robertu94/libpressio
+
+extra:
+  recipe-maintainers:
+    - valmar

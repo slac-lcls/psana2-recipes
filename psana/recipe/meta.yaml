@@ -1,0 +1,75 @@
+{% set name = "psana" %}
+{% set version = "4.2.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/slac-lcls/lcls2/archive/refs/tags/{{ version }}.tar.gz
+  sha256: d4cb39f1ffae630ad2585a5745441d24444c1b2cf2768305bdc088e4cf0cf503
+
+build:
+  skip: True  # [win]
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - cmake
+    - make
+    - pkg-config
+  host:
+    - python
+    - setuptools
+    - pip
+    - numpy
+    - cython
+    - rapidjson
+    - prometheus-cpp =0.9.0
+  run:
+    - python
+    - numpy
+    - matplotlib
+    - requests
+    - openmpi
+    - mpi4py
+    - h5py
+    - pyzmq
+    - psmon
+    - krtc
+    - ipykernel 
+    - prometheus_client
+    - amityping
+    - bson
+    - kafka-python-ng
+    - scipy
+    - rapidjson
+    - curl
+    - bson
+    - amityping
+    - mypy_extensions
+    - psmon
+    - ipykernel
+    - opencv
+    - scikit-learn
+    - pyabel
+    - pyopencl
+    - prometheus-cpp =0.9.0
+
+about:
+  home: https://github.com/slac-lcls/lcls2
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.md
+  summary: 'LCLS-II DAQ and Software'
+  description: |
+    DAQ and analysis software for LCLS-II
+  doc_url: https://github.com/slac-lcls/lcls2 
+  dev_url: https://github.com/slac-lcls/lcls2
+
+extra:
+  recipe-maintainers:
+    - valmar

@@ -1,0 +1,61 @@
+{% set name = "rogue" %}
+{% set version = "6.1.3" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: file:///var/home/valmar/Projects/CondaPsana/Recipes/rogue/recipe/{{ name }}-{{ version }}.tar.gz
+  commit: 04d1e8ab33c7f46c6c9284c80dedf6e18d5d01d6
+
+build:
+   number: 10
+
+requirements:
+   build:
+     - {{ compiler('c') }}
+     - {{ compiler('cxx') }}
+     - {{ stdlib('c') }}
+     - git
+     - cmake <4
+     - make
+   host:
+     - python
+     - boost
+     - bzip2
+     - zeromq
+     - numpy
+   run:
+     - python
+     - boost
+     - bzip2
+     - zeromq
+     - numpy
+     - ipython
+     - p4p
+     - pyyaml
+     - jsonpickle
+     - pyzmq
+     - parse
+     - click
+     - sqlalchemy
+     - pydm>=1.18.0
+     - pyserial
+     - matplotlib
+
+about:
+  home: https://github.com/slaclab/rogue
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.txt
+  summary: 'SLAC Python Based Hardware Abstraction & Data Acquisition System'
+  description: |
+    python-based hardware abstraction and data acquisition system
+    for SLAC.
+  doc_url: https://slaclab.github.io/rogue/
+  dev_url: https://github.com/slaclab/rogue
+
+extra:
+  recipe-maintainers:
+    - valmar

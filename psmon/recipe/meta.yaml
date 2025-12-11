@@ -1,0 +1,51 @@
+{% set name = "psmon" %}
+{% set version = "1.0.11" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/slaclab/{{ name }}/archive/{{ version }}.tar.gz 
+  sha256: 2131d24895d63f129a8a587d5cd1dfc49384f59f37f79fdfef192b8a34485e00
+
+build:
+  skip: True  # [win or osx]
+  noarch: python
+  number: 10
+  script:
+    - "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - pip
+  run:
+    - python
+    - pyqtgraph
+    - pyzmq
+    - numpy
+    - matplotlib
+    - ipython
+
+about:
+  home: https://github.com/slaclab/psmon
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE.md
+  summary: 'Data visualization tool for LCLS'
+  description: |
+    psmon is a remote and local data
+    visualization tool used at LCLS for online
+    analysis/monitoring developed originally to
+    work with LCLS psana analysis framework.
+    ZeroMQ is used as the data trasport layer
+    and it provides two different rendering
+    clients based on matplotlib and pyqtgraph.
+  doc_url: https://github.com/slaclab/psmon
+  dev_url: https://github.com/slaclab/psmon
+
+extra:
+  recipe-maintainers:
+    - valmar

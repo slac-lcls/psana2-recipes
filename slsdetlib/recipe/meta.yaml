@@ -1,0 +1,44 @@
+{% set name = "slsdetlib" %}
+{% set version = "9.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+
+source:
+  url: https://github.com/slsdetectorgroup/slsDetectorPackage/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 35758052864ee06497e16be0b298c798cd089982c3a31e6a9b98a56ea0176626
+
+build:
+  skip: True  # [win or osx]
+  number: 5
+  binary_relocation: True
+  rpaths:
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{compiler('cxx')}}
+    - cmake<4
+    - expat=2.6.4
+
+  host:
+    - expat=2.6.4
+
+about:
+  home: https://github.com/slsdetectorgroup/slsDetectorPackage
+  license: LGPL
+  license_family: LGPL
+  license_file: LICENSES/LGPL-3.0
+  summary: 'SLS Detector Package'
+  description: |
+    Package for SLS detectors
+  doc_url: https://github.com/slsdetectorgroup/slsDetectorPackage
+  dev_url: https://github.com/slsdetectorgroup/slsDetectorPackage
+
+extra:
+  recipe-maintainers:
+    - valmar
+    - chrisvam

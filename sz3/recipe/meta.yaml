@@ -1,0 +1,48 @@
+{% set name = "SZ3" %}
+{% set version = "3.3.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/szcompressor/{{ name }}
+  git_tag: 0ebe6fa26b0aa2e274d13b78df81a81e2db1b268
+
+build:
+  skip: True  # [win or osx]
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - cmake
+    - make
+    - pkg-config
+  host:
+    - gsl
+    - zlib
+    - zstd
+  run:
+    - gsl
+    - zlib
+    - zstd
+
+about:
+  home: https://github.com/szcompressor/SZ3
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: copyright-and-BSD-license.txt
+  summary: 'SZ3: A Modular Error-bounded Lossy Compression Framework for Scientific Datasets'
+  description: |
+    SZ3 - A Modular Error-bounded Lossy Compression Framework for Scientific Datasets
+  doc_url: https://github.com/szcompressor/SZ
+  dev_url: https://github.com/szcompressor/SZ
+
+extra:
+  recipe-maintainers:
+    - valmar
+    - chrisvam
+

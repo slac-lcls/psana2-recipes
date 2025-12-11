@@ -1,0 +1,41 @@
+{% set name = "sol2" %}
+{% set version = "3.3.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/ThePhD/sol2/archive/v{{ version }}.tar.gz
+  sha256: b82c5de030e18cb2bcbcefcd5f45afd526920c517a96413f0b59b4332d752a1e
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - cmake
+    - lua
+  host:
+    - lua
+
+about:
+  home: https://github.com/ThePhD/sol2/
+  summary: 'Simple, fast, extensible JSON encoder/decoder for Python'
+  description: |
+    sol2 is a C++ library binding to Lua. It currently supports all 
+    Lua versions 5.1+ (LuaJIT 2.0+ and MoonJIT included). sol2 aims 
+    to be easy to use and easy to add to a project. The library is 
+    header-only for easy integration with projects, and a single 
+    header can be used for drag-and-drop start up.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE.txt
+  doc_url: http://sol2.rtfd.io/
+  dev_url: https://github.com/ThePhD/sol2/
+
+extra:
+  recipe-maintainers:
+    - joergbrech
