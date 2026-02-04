@@ -6,6 +6,6 @@ mkdir -p build
 cd build
 
 # Run CMake configuration with the remaining arguments
-cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" -DCMAKE_PREFIX_PATH="${PREFIX}" -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" -DCMAKE_PREFIX_PATH="${PREFIX}" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DNO_DAQ=TRUE ..
 make -j 4
 make -j 4 install

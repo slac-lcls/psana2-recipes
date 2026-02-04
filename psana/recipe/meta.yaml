@@ -1,5 +1,5 @@
 {% set name = "psana" %}
-{% set version = "4.2.1" %}
+{% set version = "4.2.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/slac-lcls/lcls2/archive/refs/tags/{{ version }}.tar.gz
-  sha256: d4cb39f1ffae630ad2585a5745441d24444c1b2cf2768305bdc088e4cf0cf503
+  sha256: 72fc3b82e5ed013bc97501a3db8bc84cc094a7201a16bbadba94038bb22cf6f1
 
 build:
   skip: True  # [win]
@@ -25,16 +25,16 @@ requirements:
     - python
     - setuptools
     - pip
-    - numpy
+    - numpy =2
     - cython
     - rapidjson
-    - prometheus-cpp =0.9.0
+    - prometheus-cpp
   run:
     - python
-    - numpy
+    - numpy =2
     - matplotlib
     - requests
-    - openmpi
+    - openmpi =5
     - mpi4py
     - h5py
     - pyzmq
@@ -57,7 +57,7 @@ requirements:
     - scikit-learn
     - pyabel
     - pyopencl
-    - prometheus-cpp =0.9.0
+    - prometheus-cpp
 
 about:
   home: https://github.com/slac-lcls/lcls2
