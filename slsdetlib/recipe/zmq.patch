@@ -1,0 +1,176 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1313c48..f2459b5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -23,47 +23,110 @@ include(cmake/project_version.cmake)
+ include(cmake/SlsAddFlag.cmake)
+ 
+ 
++option(SLS_USE_SYSTEM_ZMQ "Use system installed libzmq" OFF)
+ 
+ # Using FetchContent to get libzmq
+ include(FetchContent)
+ option(SLS_FETCH_ZMQ_FROM_GITHUB "Fetch zmq from github" OFF)
+ option(SLS_FETCH_PYBIND11_FROM_GITHUB "Fetch pybind11 from github" OFF)
+ 
+-if(SLS_FETCH_ZMQ_FROM_GITHUB)
+-    # Opt in to pull down a zmq version from github instead of
+-    # using the bundled verison
+-    FetchContent_Declare(
+-        libzmq
+-        GIT_REPOSITORY https://github.com/zeromq/libzmq.git
+-        GIT_TAG        v4.3.4
+-    )
+-else()
+-    # Standard behaviour use libzmq included in this repo (libs/libzmq)
+-    FetchContent_Declare(
+-        libzmq
+-        URL ${CMAKE_CURRENT_SOURCE_DIR}/libs/libzmq/libzmq-4.3.4.tar.gz
+-        URL_HASH MD5=cc20b769ac10afa352e5ed2769bb23b3
+-    )
+-endif()
++if(SLS_USE_SYSTEM_ZMQ)
++    # find_package(ZeroMQ REQUIRED)
++    # 1) Try a CMake package config if available (vcpkg, Homebrew, source builds)
++    #    Many installs export either ZeroMQ::libzmq or libzmq.
++    find_package(ZeroMQ QUIET CONFIG)
++
++    set(ZEROMQ_TARGET "")
++
++    if (TARGET ZeroMQ::libzmq)
++        set(ZEROMQ_TARGET ZeroMQ::libzmq)
++        message(STATUS "Found target: ${ZEROMQ_TARGET}")
++    elseif (TARGET libzmq)
++        set(ZEROMQ_TARGET libzmq)
++        message(STATUS "Found target: ${ZEROMQ_TARGET}")
++    elseif (TARGET ZeroMQ::ZeroMQ) # rare older naming
++        set(ZEROMQ_TARGET ZeroMQ::ZeroMQ)
++        message(STATUS "Found target: ${ZEROMQ_TARGET}")
++    endif()
+ 
+-# Disable unwanted options from libzmq
+-set(BUILD_TESTS OFF CACHE BOOL "Switch off libzmq test build")
+-set(BUILD_SHARED OFF CACHE BOOL "Switch off libzmq shared libs")
+-set(WITH_PERF_TOOL OFF CACHE BOOL "")
+-set(ENABLE_CPACK OFF CACHE BOOL "")
+-set(ENABLE_CLANG OFF CACHE BOOL "")
+-set(ENABLE_CURVE OFF CACHE BOOL "")
+-set(ENABLE_DRAFTS OFF CACHE BOOL "")
+-
+-# Using GetProperties and Populate to be able to exclude zmq
+-# from install (not possible with FetchContent_MakeAvailable(libzmq))
+-FetchContent_GetProperties(libzmq)
+-if(NOT libzmq_POPULATED)
+-  FetchContent_Populate(libzmq)
+-  add_subdirectory(${libzmq_SOURCE_DIR} ${libzmq_BINARY_DIR} EXCLUDE_FROM_ALL)
+-endif()
++    # 2) Fallback: use pkg-config hints + manual find_* to create an imported target
++    if (NOT ZEROMQ_TARGET)
++        find_package(PkgConfig QUIET)
++        if (PkgConfig_FOUND)
++            pkg_check_modules(PC_ZeroMQ QUIET libzmq)
++        endif()
+ 
++        find_path(ZEROMQ_INCLUDE_DIR
++            NAMES zmq.h
++            HINTS ${PC_ZeroMQ_INCLUDE_DIRS}
++        )
+ 
++        find_library(ZEROMQ_LIBRARY
++            NAMES zmq libzmq
++            HINTS ${PC_ZeroMQ_LIBRARY_DIRS}
++        )
++
++        if (ZEROMQ_INCLUDE_DIR AND ZEROMQ_LIBRARY)
++            add_library(libzmq UNKNOWN IMPORTED)
++            set_target_properties(libzmq PROPERTIES
++            IMPORTED_LOCATION "${ZEROMQ_LIBRARY}"
++            INTERFACE_INCLUDE_DIRECTORIES "${ZEROMQ_INCLUDE_DIR}"
++            )
++            set(ZEROMQ_TARGET libzmq)
++        endif()
++    endif()
++
++    # 3) Error out if still not found, with a helpful message
++    if (NOT ZEROMQ_TARGET)
++    message(FATAL_ERROR
++        "ZeroMQ (libzmq) not found.\n"
++        "Install it (e.g. Debian/Ubuntu: 'sudo apt install libzmq3-dev' or 'libzmq5-dev', "
++        "Fedora: 'sudo dnf install zeromq-devel', macOS: 'brew install zeromq', "
++        "Windows (vcpkg): 'vcpkg install zeromq').")
++    endif()
++
++# Use it
++# target_link_libraries(your_target PRIVATE ${ZEROMQ_TARGET})
++
++    message(STATUS "Using system installed libzmq: ${ZeroMQ_LIBRARIES}")
++    message(STATUS "ZeroMQ target: ${ZEROMQ_TARGET}")
++    message(STATUS "ZeroMQ include dirs: ${ZeroMQ_INCLUDE_DIRS}")
++else()
++     if(SLS_FETCH_ZMQ_FROM_GITHUB)
++         # Opt in to pull down a zmq version from github instead of
++         # using the bundled verison
++         FetchContent_Declare(
++             libzmq
++             GIT_REPOSITORY https://github.com/zeromq/libzmq.git
++             GIT_TAG        v4.3.4
++         )
++     else()
++         # Standard behaviour use libzmq included in this repo (libs/libzmq)
++         FetchContent_Declare(
++             libzmq
++             URL ${CMAKE_CURRENT_SOURCE_DIR}/libs/libzmq/libzmq-4.3.4.tar.gz
++             URL_HASH MD5=cc20b769ac10afa352e5ed2769bb23b3
++         )
++     endif()
++
++     # Disable unwanted options from libzmq
++     set(BUILD_TESTS OFF CACHE BOOL "Switch off libzmq test build")
++     set(BUILD_SHARED OFF CACHE BOOL "Switch off libzmq shared libs")
++     set(WITH_PERF_TOOL OFF CACHE BOOL "")
++     set(ENABLE_CPACK OFF CACHE BOOL "")
++     set(ENABLE_CLANG OFF CACHE BOOL "")
++     set(ENABLE_CURVE OFF CACHE BOOL "")
++     set(ENABLE_DRAFTS OFF CACHE BOOL "")
++     
++     # Using GetProperties and Populate to be able to exclude zmq
++     # from install (not possible with FetchContent_MakeAvailable(libzmq))
++     FetchContent_GetProperties(libzmq)
++     if(NOT libzmq_POPULATED)
++       FetchContent_Populate(libzmq)
++       add_subdirectory(${libzmq_SOURCE_DIR} ${libzmq_BINARY_DIR} EXCLUDE_FROM_ALL)
++     endif()
++     
++endif()
+ 
+ include(GNUInstallDirs)
+ 
+@@ -355,4 +418,4 @@ if(SLS_MASTER_PROJECT)
+     set(CMAKE_INSTALL_DIR "share/cmake/${PROJECT_NAME}")
+     set(PROJECT_LIBRARIES slsSupportShared slsDetectorShared slsReceiverShared)
+     include(cmake/package_config.cmake)
+-endif()
+\ No newline at end of file
++endif()
+diff --git a/slsSupportLib/CMakeLists.txt b/slsSupportLib/CMakeLists.txt
+index 02bf2e6..1b86581 100755
+--- a/slsSupportLib/CMakeLists.txt
++++ b/slsSupportLib/CMakeLists.txt
+@@ -92,9 +92,16 @@ target_link_libraries(slsSupportObject
+   PRIVATE
+     slsProjectWarnings
+     md5sls     
+-    "$<BUILD_INTERFACE:libzmq-static>"
+ )
+ 
++#Treat both vendored and system zmq as interface for receiver binaries
++if(SLS_USE_SYSTEM_ZMQ)
++    message(STATUS "slsSupportLib using ZEROMQ_TARGET=${ZEROMQ_TARGET}")
++    target_link_libraries(slsSupportObject PRIVATE "${ZEROMQ_TARGET}")
++else()
++    target_link_libraries(slsSupportObject PRIVATE "$<BUILD_INTERFACE:libzmq-static>")
++endif()
++
+ if (SLS_USE_TESTS)
+     add_subdirectory(tests)
+ endif(SLS_USE_TESTS)
