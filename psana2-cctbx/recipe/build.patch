@@ -1,0 +1,14 @@
+diff --git a/build_all.sh b/build_all.sh
+index 4b1fef9ee..e8fc9cba4 100755
+--- a/build_all.sh
++++ b/build_all.sh
+@@ -15,11 +15,7 @@ force_clean=0
+ build_ext_list=""
+ PSANA_PATH=`pwd`/psana
+
+-if [ -d "/cds/sw/" ]; then
+-    no_daq=0
+-elif [ -d "/sdf/group/lcls/" ]; then
+-    no_daq=1
+-fi
++no_daq=1
