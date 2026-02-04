@@ -11,7 +11,7 @@ source:
 
 build:
   skip: True  # [win]
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -28,7 +28,7 @@ requirements:
     - numpy =2
     - cython
     - rapidjson
-    - prometheus-cpp
+    - conda-forge::prometheus-cpp
   run:
     - python
     - numpy =2
