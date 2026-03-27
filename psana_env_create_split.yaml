@@ -1,10 +1,9 @@
 channels:
-  #tidair-tag # pcas for rogue
   - lcls-ii
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
+  - python
   - setuptools 
   - cmake
   - make
@@ -18,18 +17,18 @@ dependencies:
   - curl
   - mypy_extensions
   - psmon
-  - h5py  # needed by small-h5 writer
+  - h5py 
   - krtc
   - htop
   - pyzmq
   - zeromq
   - pyqt
-  - pyqtgraph=0.12.4
+  - pyqtgraph
   - readline
   - dill
   - flake8
-  - opencv   # xtcav
-  - scikit-learn # xtcav and tmo pop alg
+  - opencv
+  - scikit-learn
   - rapidjson
   - jedi
   - transitions
@@ -37,8 +36,7 @@ dependencies:
   - requests
   - prometheus-cpp
   - prometheus_client
-  - posix_ipc
-  - pyabel  # for tmo pop algorithm
+  - pyabel
   - git-lfs
   - git
   - scikit-image
@@ -48,7 +46,6 @@ dependencies:
   - gdb
   - holoviews
   - panel
-    #- libpressio
   - xarray
   - ipympl
   - ipywidgets
@@ -79,7 +76,6 @@ dependencies:
   - pyfftw
   - p4p
   - qtconsole
-  - cogsci::pyqode.python
   - qasync
   - seaborn
   - statsmodels

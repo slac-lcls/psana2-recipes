@@ -1,0 +1,49 @@
+channels:
+  - local
+  - lcls-ii
+  - conda-forge
+  - tidair-packages # pcas for rogue
+  - nodefaults
+dependencies:
+  - python=3.11
+  - setuptools 
+  - cmake
+  - make
+  - cython
+  - compilers
+  - curl
+  - eigen
+  - epics-base
+  - git
+  - git-lfs
+  - nlohmann_json
+  - prometheus-cpp
+  - bson
+  - caproto
+  - jmespath ?
+  - kafka-python
+  - krtc
+  - numpy
+  - p4p
+  - posix_ipc
+  - prometheus_client
+  - pytz
+  - pyzmq
+  - requests
+  - transitions
+  - typer
+  - rapidjson
+  - rdma-core
+  - readline
+  - rogue
+  - slsdetlib
+  - psana
+  - zeromq
+  - gdb
+  - meson
+  - meson-python
+  - openmpi
+  - mpi4py
+  - amityping
+  - h5py
+  - scipy
