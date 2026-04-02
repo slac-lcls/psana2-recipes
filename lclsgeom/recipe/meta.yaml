@@ -10,7 +10,7 @@ source:
   sha256: 4105755ba2fb33e3f941862abfd11b0a273f299894d4db1ddc766c4ca0d48ef5
 
 build:
-  number: 0
+  number: 1
   script:
     - "{{ PYTHON }} -m pip install . -vv"
 
@@ -22,7 +22,7 @@ requirements:
   run:
     - python >=3.11,<3.12
     - numpy >=1.20.0
-    - pyfai >=0.20.0
+    - pyfai-base >=0.20.0
 
 about:
   home: https://github.com/LouConreux/LCLSGeom

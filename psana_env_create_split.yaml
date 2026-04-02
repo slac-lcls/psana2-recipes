@@ -1,7 +1,8 @@
 channels:
-  - lcls-ii
   - conda-forge
+  - lcls-ii
   - defaults
+
 dependencies:
   - python
   - setuptools 
@@ -9,14 +10,14 @@ dependencies:
   - make
   - compilers
   - numpy
-  - mpi4py   # psana packages (legion is optional)
-  - amityping
+  - mpi4py
+  - lcls-ii::amityping
   - cython
   - matplotlib
   - pytest
   - curl
   - mypy_extensions
-  - psmon
+  - lcls-ii::psmon
   - h5py 
   - krtc
   - htop
@@ -34,7 +35,7 @@ dependencies:
   - transitions
   - ipython
   - requests
-  - prometheus-cpp
+  - lcls-ii::prometheus-cpp
   - prometheus_client
   - pyabel
   - git-lfs
@@ -61,11 +62,9 @@ dependencies:
   - lark-parser
   - nlohmann_json 
   - bson
-  - networkfox
-  - dill
+  - lcls-ii::networkfox
   - pint
   - qtpy
-  - amityping
   - mypy
   - numba
   - pytest-qt
@@ -74,10 +73,11 @@ dependencies:
   - pygraphviz
   - setproctitle
   - pyfftw
-  - p4p
+  # - lcls-ii::p4p # removed due to pinning python at 3.10
   - qtconsole
   - qasync
   - seaborn
   - statsmodels
   - pydantic
-  - pyfai
+  - pyfai-base
+  - lcls-ii::lclsgeom
