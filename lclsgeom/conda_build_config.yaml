@@ -870,6 +870,7 @@ pybind11_abi:
   - 4
 python:
   # part of a zip_keys: python, is_python_min
+  - 3.10.* *_cpython
   - 3.11.* *_cpython
   - 3.12.* *_cpython
   - 3.13.* *_cp313
@@ -878,12 +879,13 @@ python_impl:
 python_min:
   # minimum supported python version per CFEP-25
   # bump to next minor version when we drop python versions
-  - '3.11'
+  - '3.10'
 is_freethreading:
   - false
 is_python_min:
   # part of a zip_keys: python, is_python_min
   - true
+  - false
   - false
   - false
 is_abi3:
