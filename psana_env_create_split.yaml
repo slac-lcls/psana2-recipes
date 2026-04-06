@@ -1,8 +1,6 @@
 channels:
   - conda-forge
-#  - lcls-ii
   - defaults
-
 dependencies:
   - python <3.14
   - setuptools 
@@ -81,3 +79,11 @@ dependencies:
 #  - scikit-beam
 #  - lclsgeom
 #  - networkfox
+#
+# NOTE: The current repository was created in this way:
+#
+# - CONDA_OVERRIDE_GLIBC=2.17 conda env create  -n psana_20260405 --file psana_env_create_split.yamlCONDA_OVERRIDE_GLIBC=2.17 conda env create  -n psana_20260329 --file psana_env_create_split.yaml
+#  - conda activate 20260405
+#  - CONDA_OVERRIDE_GLIBC=2.17 conda install -c conda-forge git-lfs pytables
+#  - CONDA_OVERRIDE_GLIBC=2.17 conda install -c conda-forge "git<2.50"
+#  - CONDA_OVERRIDE_GLIBC=2.17 conda install -c lcls-ii -c conda-forge amityping psmon krtc p4p scikit-beam lclsgeom networkfox
