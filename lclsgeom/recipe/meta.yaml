@@ -10,18 +10,18 @@ source:
   sha256: 4105755ba2fb33e3f941862abfd11b0a273f299894d4db1ddc766c4ca0d48ef5
 
 build:
-  number: 1
+  number: 3
   script:
     - "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python 3.11.*
+    - python
     - setuptools >=61.0
     - pip
   run:
-    - python >=3.11,<3.12
-    - numpy >=1.20.0
+    - python
+    - numpy >=1.20
     - pyfai-base >=0.20.0
 
 about:
