@@ -29,6 +29,8 @@ dependencies:
   - jedi
   - transitions
   - ipython
+  - meson
+  - meson-python
   - requests
   - lcls-ii::prometheus-cpp
   - prometheus_client
