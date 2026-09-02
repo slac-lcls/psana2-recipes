@@ -74,6 +74,8 @@ dependencies:
   - statsmodels
   - pydantic
   - pyfai-base
+  - hatchling
+  - pkg-config
 #  - amityping
 #  - psmon
 #  - krtc
@@ -81,6 +83,11 @@ dependencies:
 #  - scikit-beam
 #  - lclsgeom
 #  - networkfox
+   - opentelemetry-api
+   - opentelemetry-sdk
+   - opentelemetry-exporter-otlp-proto-grpc
+   - caproto
+   - mcp
 #
 # NOTE: The current repository was created in this way:
 #

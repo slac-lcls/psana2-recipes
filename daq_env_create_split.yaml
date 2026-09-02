@@ -47,3 +47,7 @@ dependencies:
   - amityping
   - h5py
   - scipy
+  - pkg-config
+  - uv
+  - hatching
+
