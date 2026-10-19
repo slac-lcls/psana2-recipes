@@ -13,7 +13,7 @@ source:
 
 build:
   skip: True  # [win or osx]
-  number: 6
+  number: 8
   binary_relocation: True
   rpaths:
     - lib/
